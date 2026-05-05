@@ -1,0 +1,47 @@
+<! DOCTYPE html>
+<html>
+<head>
+<title>Dynamic Content using DOM</title>
+
+<style>
+body {
+font-family: Arial;
+text-align: center;
+margin-top: 50px;
+}
+button {
+padding: 10px;
+margin: 10px;
+}
+</style>
+
+<script>
+/Function to display message
+function showMessage() {
+document.getElementByld("output").innerHTML = "Hello! Welcome to
+JavaScript DOM.";
+}
+/ Function to show date & time
+function showDate() {
+let now = new Date();
+document.getElementByld("output").innerHTML = now;
+}
+// Function to change color dynamically
+function change Color() {
+document.getElementByld("output").style.color = "blue";
+}
+</script>
+</head>
+
+<body>
+
+<h2>Dynamic Content using DOM</h2>
+
+<button onclick="showMessage()">Show Message</button>
+<button onclick="showDate()">Show Date & Time</button>
+<button onclick="changeColor()">Change Text Color</button>
+
+<p id="output">Click a button to see changes ...< /p>
+
+</body>
+</html>
