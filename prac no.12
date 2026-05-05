@@ -1,9 +1,9 @@
 <?php
-$fruits = array("Papaya", "Apple", "Banana", "Mango", "Orange", "Guava", "Chikoo", "Pomegranate");
+$fruits = array("Apple","Banana","Mango","Orange","grapes","pomegranate");
 
-echo "Fruits List: <br /><br />";
+echo "Fruits: <br><br>";
 
-foreach ($fruits as $fruit) {
-    echo $fruit . "<br /><br />";
+foreach($fruits as $fruit){
+    echo $fruit . "<br>";
 }
 ?>
