@@ -1,24 +1,11 @@
-<! DOCTYPE html>
-<html>
-<head>
-<title>PHP String Manipulation</title>
-</head>
-<body>
+<?php
+    $string = "ganesh";
 
-<? php
-$string = "Hello World";
+    echo "Original String: " . $string . "<br><br>";
 
-echo "Original String: " . $string . "<br>";
+    echo "Reversed: " . strrev($string) . "<br><br>";
+    
+    echo "Length: " . strlen($string) . "<br><br>";
 
-// Length
-echo "Length: " . strlen($string) . "<br>";
-
-// Reverse
-echo "Reversed: ". strrev($string) . "<br>";
-
-// Substring
-echo "Substring (0-5): ". substr($string, 0, 5);
-?>
-
-</body>
-</html>
+    echo "Substring (0 - 5): " . substr($string, 0, 5);
+    ?>
