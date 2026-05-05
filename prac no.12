@@ -1,24 +1,9 @@
-<! DOCTYPE html>
-<html>
-<head>
-<title>PHP String Manipulation</title>
-</head>
-<body>
+<?php
+$fruits = array("Papaya", "Apple", "Banana", "Mango", "Orange", "Guava", "Chikoo", "Pomegranate");
 
-<? php
-$string = "Hello World";
+echo "Fruits List: <br /><br />";
 
-echo "Original String: " . $string . "<br>";
-
-// Length
-echo "Length: " . strlen($string) . "<br>";
-
-// Reverse
-echo "Reversed: ". strrev($string) . "<br>";
-
-// Substring
-echo "Substring (0-5): ". substr($string, 0, 5);
+foreach ($fruits as $fruit) {
+    echo $fruit . "<br /><br />";
+}
 ?>
-
-</body>
-</html>
