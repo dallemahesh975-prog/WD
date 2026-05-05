@@ -1,11 +1,11 @@
 <?php
-    $string = "ganesh";
+$string = "Vaishnavi Chaudhari";
 
-    echo "Original String: " . $string . "<br><br>";
+echo "Original String: " . $string . "<br>";
 
-    echo "Reversed: " . strrev($string) . "<br><br>";
-    
-    echo "Length: " . strlen($string) . "<br><br>";
+echo "Length: " . strlen($string) . "<br>";
 
-    echo "Substring (0 - 5): " . substr($string, 0, 5);
-    ?>
+echo "Reversed: " . strrev($string) . "<br>";
+
+echo "Substring(0-5): " . substr($string, 0, 6);
+?>
