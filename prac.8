@@ -1,99 +1,57 @@
-<! DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
-<title>Simple Calculator</title>
+    <title>Simple Calculator</title>
 </head>
-
 <body>
 
-<h2>Simple Calculator</h2>
+    <h2>Simple Calculator</h2>
 
-<label>Enter First Number :< /label>
-<input type="number" id="num1*><br><br>
+    <label>Enter First Number:</label>
+    <input type="number" id="num1"><br><br>
 
-<label>Enter Second Number :< /label>
-<input type="number" id="num2"><br><br>
+    <label>Enter Second Number:</label>
+    <input type="number" id="num2"><br><br>
 
-<label>Select Operation :< /label>
-<select id="operator">
-<option value="+">Addition (+)</option>
-coption value=" -* >Subtraction (-)</option>
-<option value="*">Multiplication (*)</option>
-soption value="/*>Division (/)</option>
-</select><br><br>
+    <label>Select Operation:</label>
+    <select id="operator">
+        <option value="+">Addition (+)</option>
+        <option value="-">Subtraction (-)</option>
+        <option value="*">Multiplication (*)</option>
+        <option value="/">Division (/)</option>
+    </select><br><br>
 
-<button onclick="calculate()">Calculate</button>
-<h3 id="result"></h3>
+    <button onclick="calculate()">Calculate</button>
+    <h3 id="result"></h3>
 
-<script>
-function calculate() {
-let num1 = parseFloat(document.getElementByld("num1").value);
-let num2 = parseFloat(document.getElementByld("num2").value);
-let op = document.getElementByld("operator").value;
-let result;
+    <script>
+        function calculate() {
+            // "getElementById" was misspelled in your original snippet
+            let num1 = parseFloat(document.getElementById("num1").value);
+            let num2 = parseFloat(document.getElementById("num2").value);
+            let op = document.getElementById("operator").value;
+            let result;
 
-switch(op) {
-case "+";
-result = add(num1, num2);
+            if (isNaN(num1) || isNaN(num2)) {
+                result = "Please enter valid numbers";
+            } else {
+                switch(op) {
+                    case "+": result = add(num1, num2); break;
+                    case "-": result = subtract(num1, num2); break;
+                    case "*": result = multiply(num1, num2); break;
+                    case "/": 
+                        result = (num2 === 0) ? "Cannot divide by zero" : divide(num1, num2); 
+                        break;
+                    default: result = "Invalid operation";
+                }
+            }
+            document.getElementById("result").innerHTML = "Result: " + result;
+        }
 
-break;
-
-case " -*:
-result = subtract(num1, num2);
-break;
-
-case "*":
-result = multiply(num1, num2);
-break;
-
-case "/":
-if (num2 == 0) {
-result = "Cannot divide by zero *;
-) else{
-result = divide(num1, num2);
-}
-break:
-let result,
-switch(op) {
-case "+":
-result = add(num1, num2);
-
-break;
-
-case "-":
-result = subtract(num1, num2);
-break;
-
-case " **:
-result = multiply(num1, num2);
-break;
-
-case "/":
-if (num2 == 0) {
-result = "Cannot divide by zero";
-} else {
-result = divide(num1, num2);
-}
-break;
-
-default:
-result = "Invalid operation";
-}
-document.getElementByld("result").innerHTML = "Result: " + result;
-}
-function add(a, b) {
-return a + b;
-}
-function subtract(a, b) {
-return a - b;
-}
-function multiply(a, b) {
-return a * b;
-}
-function divide(a, b) {
-return a / b;
-}
-</script>
-
+        function add(a, b) { return a + b; }
+        function subtract(a, b) { return a - b; }
+        function multiply(a, b) { return a * b; }
+        function divide(a, b) { return a / b; }
+    </script>
 </body>
 </html>
