@@ -1,47 +1,53 @@
-<! DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-<title>Dynamic Content using DOM</title>
+  <head>
+    <title>Form Validation</title>
+  </head>
+  <body>
+    <h2>Registration Form</h2>
 
-<style>
-body {
-font-family: Arial;
-text-align: center;
-margin-top: 50px;
-}
-button {
-padding: 10px;
-margin: 10px;
-}
-</style>
+    <form onsubmit="return validateForm();">
+      <label>Name:</label><br />
+      <input type="text" id="name" /><br /><br />
 
-<script>
-/Function to display message
-function showMessage() {
-document.getElementByld("output").innerHTML = "Hello! Welcome to
-JavaScript DOM.";
-}
-/ Function to show date & time
-function showDate() {
-let now = new Date();
-document.getElementByld("output").innerHTML = now;
-}
-// Function to change color dynamically
-function change Color() {
-document.getElementByld("output").style.color = "blue";
-}
-</script>
-</head>
+      <label>Email:</label><br />
+      <input type="text" id="email" /><br /><br />
 
-<body>
+      <label>Password:</label><br />
+      <input type="password" id="password" /><br /><br />
 
-<h2>Dynamic Content using DOM</h2>
+      <button type="submit">Submit</button>
+    </form>
 
-<button onclick="showMessage()">Show Message</button>
-<button onclick="showDate()">Show Date & Time</button>
-<button onclick="changeColor()">Change Text Color</button>
+    <p id="message" style="color: red"></p>
 
-<p id="output">Click a button to see changes ...< /p>
+    <script>
+      function validateForm() {
+        var name = document.getElementById("name").value;
+        var email = document.getElementById("email").value;
+        var password = document.getElementById("password").value;
+        var msg = document.getElementById("message");
 
-</body>
+        if (name === "" || email === "" || password === "") {
+          msg.textContent = "Error: All fields are required.";
+          return false;
+        }
+
+        var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+          msg.textContent = "Error: Enter a valid email address.";
+          return false;
+        }
+
+        if (password.length < 6) {
+          msg.textContent = "Error: Password must be at least 6 characters.";
+          return false;
+        }
+
+        msg.style.color = "green";
+        msg.textContent = "Form submitted successfully!";
+        return true;
+      }
+    </script>
+  </body>
 </html>
