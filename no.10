@@ -1,28 +1,30 @@
-<! DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Your Page Title</title>
+    <title>PHP POST Form sdk</title>
 </head>
+
 <body>
+    <form method="POST">
+        <label><b>1.</b> Name: </label><input type="text" name="name" required placeholder="Ganesh"><br><br>
+        <label><b>2.</b> Age: </label><input type="number" name="age" required placeholder="20"><br><br>
+        <label><b>3.</b> Gender: </label><input type="text" name="gender" required placeholder="Male"><br><br>
+        <input type="submit" value="Submit">
+    </form>
+    <?php
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-<h1>PHP Form Using POST Method</h1>
-<form method="POST" action="">
-Name: <input type="text" name="name"><br><br>
-Age: <input type="text" name="age"><br><br>
-<input type="submit" value="Submit"><br><br><br><br><br><br>=
+        $name = $_POST['name'];
+        $age = $_POST['age'];
+        $gender = $_POST['gender'];
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-$name = $_POST['name' ];
-$age = $_POST['age' ];
-
-echo "Name:" . $name . "<br>";
-echo "Age:" . $age;
-
-?>
-
-</form>
-
+        echo "Form POST Output using Php:-" . "<br><br>";
+        echo "1. Name: " . $name . "<br>";
+        echo "2. Age: " . $age . "<br>";
+        echo "3. Gender: " . $gender;
+    }
+    ?>
 </body>
+
 </html>
