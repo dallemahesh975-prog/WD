@@ -1,0 +1,56 @@
+CREATE TABLE Emp1 (
+    EmpID INT PRIMARY KEY,
+    EmpName VARCHAR(50),
+    Job VARCHAR(30),
+    Salary DECIMAL(10, 2)
+);
+
+INSERT INTO Emp1 VALUES (101, 'Alice Smith', 'Manager', 75000.00);
+INSERT INTO Emp1 VALUES (102, 'Bob Jones', 'Developer', 60000.00);
+INSERT INTO Emp1 VALUES (103, 'Charlie Brown', 'Analyst', 55000.00);
+DELIMITER //
+
+CREATE PROCEDURE Get_Employee_Details()
+BEGIN
+    -- 1. Declare local variables to hold fetched data
+    DECLARE v_id INT;
+    DECLARE v_name VARCHAR(50);
+    DECLARE v_job VARCHAR(30);
+    DECLARE v_salary DECIMAL(10, 2);
+    
+    -- 2. Declare a loop control variable
+    DECLARE done INT DEFAULT FALSE;
+
+    -- 3. Declare the explicit cursor
+    DECLARE c_emp CURSOR FOR 
+        SELECT EmpID, EmpName, Job, Salary FROM Emp1;
+        
+    -- 4. Declare a NOT FOUND handler to gracefully exit the loop
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
+    -- 5. Open the cursor
+    OPEN c_emp;
+
+    -- Header for clarity
+    SELECT 'ID', 'Name', 'Job', 'Salary';
+
+    -- 6. Loop through the rows
+    read_loop: LOOP
+        -- Fetch the data into our local variables
+        FETCH c_emp INTO v_id, v_name, v_job, v_salary;
+
+        -- Check if handler set 'done' to true (end of table reached)
+        IF done THEN
+            LEAVE read_loop;
+        END IF;
+
+        -- Display the current row data
+        SELECT v_id AS EmpID, v_name AS Name, v_job AS Job, v_salary AS Salary;
+    END LOOP;
+
+    -- 7. Close the cursor
+    CLOSE c_emp;
+END //
+
+DELIMITER ;
+CALL Get_Employee_Details();
