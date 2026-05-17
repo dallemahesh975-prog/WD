@@ -1,10 +1,40 @@
-<!DOCTYPE html>
-<html>
-<body>
-    <h1>Personal Profile</h1>
-    <p><b>Name:</b> John Doe</p>
-    <p><i>Occupation:</i> Student</p>
-    <p><u>Location:</u> New York, USA</p>
-    <p><strong>Bio:</strong> Learning HTML is <em>fun</em> and useful!</p>
-</body>
-</html>
+-- Creating Department Table
+CREATE TABLE Department (
+    dept_id INT PRIMARY KEY,
+    dept_name VARCHAR(50) NOT NULL
+);
+
+-- Creating Employee Table
+CREATE TABLE Employee (
+    emp_id INT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    department INT,
+    salary DECIMAL(10, 2) CHECK (salary >= 0),
+    FOREIGN KEY (department) REFERENCES Department(dept_id)
+);
+
+-- Creating Student Table
+CREATE TABLE Student (
+    id INT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    dob DATE NOT NULL,
+    marks INT CHECK (marks BETWEEN 0 AND 100)
+);
+ALTER TABLE Employee 
+ADD email VARCHAR(100);
+ALTER TABLE Employee 
+RENAME COLUMN department TO dept_name;
+ALTER TABLE Employee 
+RENAME COLUMN name TO emp_name;
+ALTER TABLE Department 
+RENAME TO Dept;
+DROP TABLE Dept;
+INSERT INTO Student (id, name, dob, marks) VALUES
+(1, 'Rahul Sharma', '2005-04-12', 85),
+(2, 'Sneha Patil', '2005-09-21', 92),
+(3, 'Amit Verma', '2006-01-05', 78),
+(4, 'Priya Nair', '2005-11-18', 88),
+(5, 'Yash Gupta', '2005-07-30', 65);
+TRUNCATE TABLE Student;
+ALTER TABLE Employee 
+DROP COLUMN salary;
