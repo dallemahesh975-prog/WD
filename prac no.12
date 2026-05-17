@@ -1,9 +1,1 @@
-<?php
-$fruits = array("Apple","Banana","Mango","Orange","grapes","pomegranate");
-
-echo "Fruits: <br><br>";
-
-foreach($fruits as $fruit){
-    echo $fruit . "<br>";
-}
-?>
+j
