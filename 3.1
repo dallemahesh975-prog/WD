@@ -1,0 +1,61 @@
+SELECT DISTINCT Age 
+FROM Student 
+WHERE Marks < (SELECT AVG(Marks) FROM Student);
+-- 1. Create Department Table
+CREATE TABLE Department (
+    Dept_ID INT PRIMARY KEY,
+    Dept_Name VARCHAR(50) NOT NULL UNIQUE
+);
+
+-- 2. Create Employee Table
+CREATE TABLE Employee (
+    emp_id INT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    department INT,
+    salary DECIMAL(10, 2) NOT NULL CHECK (salary >= 0),
+    FOREIGN KEY (department) REFERENCES Department(Dept_ID) 
+        ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+-- 3. Create Student Table
+CREATE TABLE Student (
+    Student_ID INT PRIMARY KEY,
+    Student_Name VARCHAR(100) NOT NULL,
+    Email VARCHAR(100) UNIQUE,
+    Age INT CHECK (Age > 0),
+    Marks INT CHECK (Marks >= 0 AND Marks <= 100)
+);
+-- Insert into Department
+INSERT INTO Department (Dept_ID, Dept_Name) VALUES
+(10, 'Computer Engineering'),
+(20, 'Information Technology'),
+(30, 'Mechanical Engineering'),
+(40, 'Electronics'),
+(50, 'Humanities');
+
+-- Insert into Employee
+INSERT INTO Employee (emp_id, name, department, salary) VALUES
+(101, 'Amit Sharma', 10, 45000.00),
+(102, 'Raman Verma', 10, 60000.00),
+(103, 'Saman Patel', 20, 52000.00),
+(104, 'Priya Nair', 30, 48000.00),
+(105, 'Vikram Singh', 40, 35000.00);
+
+-- Insert into Student
+INSERT INTO Student (Student_ID, Student_Name, Email, Age, Marks) VALUES
+(1, 'Rahul Patil', 'rahul@mail.com', 19, 45),
+(2, 'Sneha Kulkarni', 'sneha@mail.com', 20, 78),
+(3, 'Aditya Joshi', 'aditya@mail.com', 19, 32),
+(4, 'Ananya Deshmukh', 'ananya@mail.com', 21, 85),
+(5, 'Yash Shinde', 'yash@mail.com', 20, 50);
+SELECT * FROM Student 
+WHERE Marks <= 50;
+SELECT * FROM Department 
+ORDER BY Dept_ID DESC;
+UPDATE Employee 
+SET salary = salary + 2000;
+SELECT * FROM Employee 
+WHERE name LIKE '__m%';
+SELECT emp_id, name, salary 
+FROM Employee 
+WHERE salary > 5000;
