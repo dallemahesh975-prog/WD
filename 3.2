@@ -1,0 +1,56 @@
+-- Create Department Table
+CREATE TABLE Department (
+    Dept_ID INT PRIMARY KEY,
+    Dept_Name VARCHAR(50) NOT NULL
+);
+
+-- Create Employee Table
+CREATE TABLE Employee (
+    emp_id INT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    department INT,
+    salary DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (department) REFERENCES Department(Dept_ID)
+);
+
+-- Create Student Table
+CREATE TABLE Student (
+    Student_ID INT PRIMARY KEY,
+    Student_Name VARCHAR(100) NOT NULL,
+    Email VARCHAR(100) UNIQUE,
+    Age INT NOT NULL,
+    Marks INT NOT NULL
+);
+-- Inserting into Department
+INSERT INTO Department (Dept_ID, Dept_Name) VALUES
+(10, 'Computer Engineering'),
+(20, 'Information Technology'),
+(30, 'Data Science'),
+(40, 'Mechanical Engineering'),
+(50, 'Human Resources');
+
+-- Inserting into Employee
+INSERT INTO Employee (emp_id, name, department, salary) VALUES
+(101, 'Alok Somvanshi', 10, 75000.00),
+(102, 'Suksham Raina', 10, 85000.00),
+(103, 'Prajwal Solanke', 20, 72000.00),
+(104, 'Amit Sharma', 30, 85000.00),
+(105, 'Neha Patil', 50, 60000.00);
+
+-- Inserting into Student
+INSERT INTO Student (Student_ID, Student_Name, Email, Age, Marks) VALUES
+(1, 'Rahul Verma', 'rahul@gmail.com', 19, 85),
+(2, 'Sneha Joshi', 'sneha@gmail.com', 20, 92),
+(3, 'Aditya Singh', 'aditya@gmail.com', 19, 78),
+(4, 'Pooja Kale', 'pooja@gmail.com', 21, 95),
+(5, 'Rohan Das', 'rohan@gmail.com', 20, 88);
+SELECT DISTINCT salary 
+FROM Employee 
+ORDER BY salary ASC;
+SELECT Age, MAX(Marks) AS Highest_Marks 
+FROM Student 
+GROUP BY Age;
+SELECT SUM(Marks) AS Total_Marks 
+FROM Student;
+SELECT AVG(salary) AS Average_Salary 
+FROM Employee;
