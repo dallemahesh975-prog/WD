@@ -1,0 +1,64 @@
+--- Create Customer Table
+CREATE TABLE Customer (
+    customer_id INT PRIMARY KEY,
+    customer_name VARCHAR(100) NOT NULL,
+    city VARCHAR(50) NOT NULL
+);
+
+-- Create Product Table
+CREATE TABLE Product (
+    Product_id INT PRIMARY KEY,
+    Product_name VARCHAR(100) NOT NULL,
+    Price DECIMAL(10, 2) NOT NULL
+);
+
+-- Create Order Table (Using backticks to prevent reserved keyword conflicts)
+CREATE TABLE `Order` (
+    Order_id INT PRIMARY KEY,
+    customer_id INT,
+    Product_id INT,
+    quantity INT NOT NULL,
+    FOREIGN KEY (customer_id) REFERENCES Customer(customer_id),
+    FOREIGN KEY (Product_id) REFERENCES Product(Product_id)
+);
+-- Insert 5 records into Customer
+INSERT INTO Customer (customer_id, customer_name, city) VALUES
+(101, 'Amit Sharma', 'Pune'),
+(102, 'Priya Patel', 'Mumbai'),
+(103, 'Rahul Verma', 'Delhi'),
+(104, 'Sneha Joshi', 'Pune'),
+(105, 'Vikram Singh', 'Bangalore');
+
+-- Insert 5 records into Product
+INSERT INTO Product (Product_id, Product_name, Price) VALUES
+(201, 'Laptop', 65000.00),
+(202, 'Smartphone', 25000.00),
+(203, 'Headphones', 4500.00),
+(204, 'Smart Watch', 8000.00),
+(205, 'Keyboard', 5500.00);
+
+-- Insert 5 records into Order (Customers 104 and 105 won't place orders for query iii)
+INSERT INTO `Order` (Order_id, customer_id, Product_id, quantity) VALUES
+(1, 101, 201, 1),
+(2, 101, 203, 2),
+(3, 102, 202, 1),
+(4, 103, 204, 1),
+(5, 102, 205, 3);
+SELECT DISTINCT c.customer_id, c.customer_name, c.city
+FROM Customer c
+JOIN `Order` ord ON c.customer_id = ord.customer_id;
+SELECT customer_id, customer_name, city
+FROM Customer
+WHERE customer_id NOT IN (SELECT DISTINCT customer_id FROM `Order`);
+SELECT Product_id, Product_name, Price
+FROM Product
+WHERE Price = (SELECT MAX(Price) FROM Product);
+SELECT 
+    ord.Order_id, 
+    c.customer_name, 
+    p.Product_name, 
+    ord.quantity AS quantity_ordered, 
+    (ord.quantity * p.Price) AS total_amount
+FROM `Order` ord
+JOIN Customer c ON ord.customer_id = c.customer_id
+JOIN Product p ON ord.Product_id = p.Product_id;
