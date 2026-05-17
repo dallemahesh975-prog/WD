@@ -1,64 +1,73 @@
---- Create Customer Table
+CREATE DATABASE ShopDB;
+USE ShopDB;
+
+-- Create Customer Table
 CREATE TABLE Customer (
     customer_id INT PRIMARY KEY,
-    customer_name VARCHAR(100) NOT NULL,
+    customer_name VARCHAR(50) NOT NULL,
     city VARCHAR(50) NOT NULL
 );
 
 -- Create Product Table
 CREATE TABLE Product (
-    Product_id INT PRIMARY KEY,
-    Product_name VARCHAR(100) NOT NULL,
-    Price DECIMAL(10, 2) NOT NULL
+    product_id INT PRIMARY KEY,
+    product_name VARCHAR(50) NOT NULL,
+    price DECIMAL(10,2) NOT NULL
 );
 
--- Create Order Table (Using backticks to prevent reserved keyword conflicts)
-CREATE TABLE `Order` (
-    Order_id INT PRIMARY KEY,
+-- Create Orders Table
+CREATE TABLE Orders (
+    order_id INT PRIMARY KEY,
     customer_id INT,
-    Product_id INT,
+    product_id INT,
     quantity INT NOT NULL,
+    
     FOREIGN KEY (customer_id) REFERENCES Customer(customer_id),
-    FOREIGN KEY (Product_id) REFERENCES Product(Product_id)
+    FOREIGN KEY (product_id) REFERENCES Product(product_id)
 );
--- Insert 5 records into Customer
-INSERT INTO Customer (customer_id, customer_name, city) VALUES
-(101, 'Amit Sharma', 'Pune'),
-(102, 'Priya Patel', 'Mumbai'),
-(103, 'Rahul Verma', 'Delhi'),
-(104, 'Sneha Joshi', 'Pune'),
-(105, 'Vikram Singh', 'Bangalore');
+INSERT INTO Customer VALUES
+(1, 'Amit', 'Pune'),
+(2, 'Rahul', 'Mumbai'),
+(3, 'Sneha', 'Nashik'),
+(4, 'Priya', 'Nagpur'),
+(5, 'Karan', 'Delhi');
 
--- Insert 5 records into Product
-INSERT INTO Product (Product_id, Product_name, Price) VALUES
-(201, 'Laptop', 65000.00),
-(202, 'Smartphone', 25000.00),
-(203, 'Headphones', 4500.00),
-(204, 'Smart Watch', 8000.00),
-(205, 'Keyboard', 5500.00);
+-- Insert Records into Product
+INSERT INTO Product VALUES
+(101, 'Laptop', 55000),
+(102, 'Mobile', 20000),
+(103, 'Headphones', 3000),
+(104, 'Keyboard', 1500),
+(105, 'Mouse', 800);
 
--- Insert 5 records into Order (Customers 104 and 105 won't place orders for query iii)
-INSERT INTO `Order` (Order_id, customer_id, Product_id, quantity) VALUES
-(1, 101, 201, 1),
-(2, 101, 203, 2),
-(3, 102, 202, 1),
-(4, 103, 204, 1),
-(5, 102, 205, 3);
-SELECT DISTINCT c.customer_id, c.customer_name, c.city
+-- Insert Records into Orders
+INSERT INTO Orders VALUES
+(1, 1, 101, 1),
+(2, 2, 102, 2),
+(3, 1, 103, 3),
+(4, 3, 104, 1),
+(5, 4, 105, 2);
+SELECT DISTINCT c.customer_id, c.customer_name
 FROM Customer c
-JOIN `Order` ord ON c.customer_id = ord.customer_id;
-SELECT customer_id, customer_name, city
-FROM Customer
-WHERE customer_id NOT IN (SELECT DISTINCT customer_id FROM `Order`);
-SELECT Product_id, Product_name, Price
+JOIN Orders o
+ON c.customer_id = o.customer_id;
+SELECT c.customer_id, c.customer_name
+FROM Customer c
+LEFT JOIN Orders o
+ON c.customer_id = o.customer_id
+WHERE o.order_id IS NULL;
+SELECT *
 FROM Product
-WHERE Price = (SELECT MAX(Price) FROM Product);
+WHERE price = (SELECT MAX(price) FROM Product);
 SELECT 
-    ord.Order_id, 
-    c.customer_name, 
-    p.Product_name, 
-    ord.quantity AS quantity_ordered, 
-    (ord.quantity * p.Price) AS total_amount
-FROM `Order` ord
-JOIN Customer c ON ord.customer_id = c.customer_id
-JOIN Product p ON ord.Product_id = p.Product_id;
+    o.order_id,
+    c.customer_name,
+    p.product_name,
+    o.quantity,
+    p.price,
+    (o.quantity * p.price) AS total_amount
+FROM Orders o
+JOIN Customer c
+ON o.customer_id = c.customer_id
+JOIN Product p
+ON o.product_id = p.product_id;
