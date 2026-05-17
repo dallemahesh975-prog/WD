@@ -1,0 +1,86 @@
+-- Create a new database (optional)
+CREATE DATABASE ShopDB;
+USE ShopDB;
+
+-- 1. Create Customer Table
+CREATE TABLE Customer (
+    customer_id INT PRIMARY KEY,
+    customer_name VARCHAR(100) NOT NULL,
+    city VARCHAR(50)
+);
+
+-- 2. Create Product Table
+CREATE TABLE Product (
+    Product_id INT PRIMARY KEY,
+    Product_name VARCHAR(100) NOT NULL,
+    Price DECIMAL(10, 2)
+);
+
+-- 3. Create Order Table (with Foreign Keys)
+CREATE TABLE `Order` (
+    Order_id INT PRIMARY KEY,
+    customer_id INT,
+    Product_id INT,
+    quantity INT,
+    FOREIGN KEY (customer_id) REFERENCES Customer(customer_id),
+    FOREIGN KEY (Product_id) REFERENCES Product(Product_id)
+);
+-- Insert Data into Customer Table
+INSERT INTO Customer (customer_id, customer_name, city) VALUES
+(1, 'Amit Sharma', 'Pune'),
+(2, 'Neha Gupta', 'Mumbai'),
+(3, 'Rahul Verma', 'Delhi'); -- Has no orders
+
+-- Insert Data into Product Table
+INSERT INTO Product (Product_id, Product_name, Price) VALUES
+(101, 'Laptop', 55000.00),
+(102, 'Smartphone', 25000.00),
+(103, 'Monitor', 12000.00); -- Has not been ordered
+
+-- Insert Data into Order Table
+INSERT INTO `Order` (Order_id, customer_id, Product_id, quantity) VALUES
+(501, 1, 101, 1), -- Amit ordered a Laptop
+(502, 1, 102, 2), -- Amit ordered 2 Smartphones
+(503, 2, 101, 1); -- Neha ordered a Laptop
+SELECT 
+    c.customer_name, 
+    p.Product_name, 
+    o.quantity
+FROM 
+    Customer c
+INNER JOIN 
+    `Order` o ON c.customer_id = o.customer_id
+INNER JOIN 
+    Product p ON o.Product_id = p.Product_id;
+SELECT 
+    c.customer_id,
+    c.customer_name, 
+    c.city,
+    o.Order_id,
+    o.quantity
+FROM 
+    Customer c
+LEFT JOIN 
+    `Order` o ON c.customer_id = o.customer_id;
+SELECT 
+    p.Product_id,
+    p.Product_name,
+    p.Price,
+    o.Order_id,
+    o.quantity
+FROM 
+    `Order` o
+RIGHT JOIN 
+    Product p ON o.Product_id = p.Product_id;
+  SELECT 
+    c.customer_id,
+    c.customer_name,
+    p.Product_id,
+    p.Product_name
+FROM 
+    Customer c
+CROSS JOIN 
+    Product p;
+    
+    
+    
