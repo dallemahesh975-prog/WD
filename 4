@@ -1,0 +1,27 @@
+CREATE TABLE Student_Result (
+    stud_id INT,
+    stud_name VARCHAR(50),
+    subject VARCHAR(50),
+    Marks INT,
+    Department VARCHAR(50)
+);
+INSERT INTO Student_Result (stud_id, stud_name, subject, Marks, Department) VALUES
+(101, 'yask', 'DBMS', 85, 'Computer'),
+(102, 'sham', 'DBMS', 78, 'Computer'),
+(103, 'Prajwal', 'OS', 92, 'Computer'),
+(104, 'Amit', 'DBMS', 65, 'IT'),
+(105, 'Rahul', 'OS', 82, 'E&TC');
+SELECT Department, COUNT(DISTINCT stud_id) AS Total_Students
+FROM Student_Result
+GROUP BY Department;
+SELECT subject, AVG(Marks) AS Average_Marks
+FROM Student_Result
+GROUP BY subject;
+SELECT Department, AVG(Marks) AS Average_Marks
+FROM Student_Result
+GROUP BY Department
+HAVING AVG(Marks) > 80;
+SELECT subject, COUNT(DISTINCT stud_id) AS Student_Count
+FROM Student_Result
+GROUP BY subject
+HAVING COUNT(DISTINCT stud_id) > 2;
