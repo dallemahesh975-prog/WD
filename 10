@@ -1,0 +1,117 @@
+db.Employee.insertMany([
+{
+    Empid: 1,
+    Name: {FName: "Amit", LName: "Sharma"},
+    CompanyName: "TCS",
+    Salary: 65000,
+    Designation: "Developer",
+    Age: 25,
+    Expertise: "Java",
+    DOB: "1999-05-10",
+    EmailId: "amit@gmail.com",
+    Contact: "9876543210"
+},
+{
+    Empid: 2,
+    Name: {FName: "Sneha", LName: "Patil"},
+    CompanyName: "Infosys",
+    Salary: 55000,
+    Designation: "Tester",
+    Age: 24,
+    Expertise: "Testing",
+    DOB: "2000-03-12",
+    EmailId: "sneha@gmail.com",
+    Contact: "9876501234"
+},
+{
+    Empid: 3,
+    Name: {FName: "Rohit", LName: "Kale"},
+    CompanyName: "TCS",
+    Salary: 80000,
+    Designation: "Manager",
+    Age: 30,
+    Expertise: "Management",
+    DOB: "1994-08-21",
+    EmailId: "rohit@gmail.com",
+    Contact: "9988776655"
+},
+{
+    Empid: 4,
+    Name: {FName: "Priya", LName: "Joshi"},
+    CompanyName: "Wipro",
+    Salary: 72000,
+    Designation: "Developer",
+    Age: 27,
+    Expertise: "Python",
+    DOB: "1997-02-15",
+    EmailId: "priya@gmail.com",
+    Contact: "9123456780"
+},
+{
+    Empid: 5,
+    Name: {FName: "Neha", LName: "Singh"},
+    CompanyName: "Infosys",
+    Salary: 90000,
+    Designation: "Manager",
+    Age: 32,
+    Expertise: "Cloud",
+    DOB: "1992-11-05",
+    EmailId: "neha@gmail.com",
+    Contact: "9871234567"
+}
+]);
+-----------------------------------------------------------------------------------------------------------------------------------
+db.Employee.aggregate([
+{
+    $match: { Salary: { $gt: 60000 } }
+},
+{
+    $group: {
+        _id: "$CompanyName",
+        TotalSalary: { $sum: "$Salary" }
+    }
+}
+]);
+-----------------------------------------------------------------------------------------------------------------------------------
+db.Employee.aggregate([
+{
+    $group: {
+        _id: "$CompanyName",
+        MaxSalary: { $max: "$Salary" },
+        MinSalary: { $min: "$Salary" }
+    }
+}
+]);
+-------------------------------------------------------------------------------------------------------------------------------
+db.Employee.aggregate([
+{
+    $group: {
+        _id: "$CompanyName",
+        TotalSalary: { $sum: "$Salary" }
+    }
+},
+{
+    $out: "CompanySalary"
+}
+]);
+------------------------------------------------------------------------------------------------------------------------------
+db.Employee.aggregate([
+{
+    $group: {
+        _id: "$Designation",
+        EmployeeCount: { $sum: 1 }
+    }
+}
+]);
+---------------------------------------------------------------------------------------------------------------------------
+db.Employee.countDocuments();
+
+// vi. Calculate average salary of each company
+db.Employee.aggregate([
+{
+    $group: {
+        _id: "$CompanyName",
+        AverageSalary: { $avg: "$Salary" }
+    }
+}
+]);
