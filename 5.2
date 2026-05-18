@@ -1,10 +1,8 @@
--- 1. Create Department Table
 CREATE TABLE Department (
     Dept_ID INT PRIMARY KEY,
     Dept_Name VARCHAR(50) NOT NULL
 );
-
--- 2. Create Student Table
+---------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE Student (
     Student_ID INT PRIMARY KEY,
     Student_Name VARCHAR(100) NOT NULL,
@@ -13,8 +11,8 @@ CREATE TABLE Student (
     Dept_ID INT,
     FOREIGN KEY (Dept_ID) REFERENCES Department(Dept_ID) ON DELETE SET NULL
 );
+---------------------------------------------------------------------------------------------------------------------------------
 
--- 3. Create Course Table
 CREATE TABLE Course (
     Course_ID INT PRIMARY KEY,
     Course_Name VARCHAR(100) NOT NULL,
@@ -22,8 +20,8 @@ CREATE TABLE Course (
     Dept_ID INT,
     FOREIGN KEY (Dept_ID) REFERENCES Department(Dept_ID) ON DELETE SET NULL
 );
+---------------------------------------------------------------------------------------------------------------------------------
 
--- 4. Create Enrollments Table
 CREATE TABLE Enrollments (
     Enrollment_ID INT PRIMARY KEY,
     Student_ID INT,
@@ -31,19 +29,29 @@ CREATE TABLE Enrollments (
     Semester VARCHAR(20) NOT NULL,
     FOREIGN KEY (Student_ID) REFERENCES Student(Student_ID) ON DELETE CASCADE
 );
+---------------------------------------------------------------------------------------------------------------------------------
+
 CREATE VIEW View_Student_Details AS
 SELECT Student_Name, Email, Dept_ID
 FROM Student;
+---------------------------------------------------------------------------------------------------------------------------------
+
 CREATE VIEW View_Adult_Students AS
 SELECT Student_ID, Student_Name, Email, Age, Dept_ID
 FROM Student
 WHERE Age > 20;
+---------------------------------------------------------------------------------------------------------------------------------
+
 CREATE VIEW View_Course_Credits AS
 SELECT Course_Name, Credits
 FROM Course;
+---------------------------------------------------------------------------------------------------------------------------------
+
 SELECT * FROM View_Student_Details;
 UPDATE View_Student_Details
 SET Email = 'new.email@example.com'
 WHERE Student_Name = 'John Doe';
+---------------------------------------------------------------------------------------------------------------------------------
+
 DELETE FROM View_Adult_Students
 WHERE Student_ID = 101;
