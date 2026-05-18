@@ -1,1 +1,55 @@
-j
+CREATE TABLE Employees2 (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(50) NOT NULL,
+    salary DECIMAL(10,2) NOT NULL
+);
+--------------------------------------------------------------------------------------------------------------------------------
+DELIMITER $$
+
+CREATE TRIGGER salary_validation_insert
+BEFORE INSERT ON Employees2
+FOR EACH ROW
+BEGIN
+    IF NEW.salary < 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Invalid salary';
+    END IF;
+END $$
+
+DELIMITER ;
+--------------------------------------------------------------------------------------------------------------------------------
+INSERT INTO Employees2 VALUES (2, 'Amit', -100);     
+--------------------------------------------------------------------------------------------------------------------------------
+INSERT INTO Employees2 VALUES (1, 'Rahul', 40000);   
+--------------------------------------------------------------------------------------------------------------------------------
+DELIMITER $$
+
+CREATE TRIGGER salary_validation_update
+BEFORE UPDATE ON Employees2
+FOR EACH ROW
+BEGIN
+    IF NEW.salary < 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Invalid salary on update';
+    END IF;
+END $$
+
+DELIMITER ;
+------------------------------------------------------------------------------------------------------------------------------
+UPDATE Employees2 SET salary = -500 WHERE emp_id = 1; 
+------------------------------------------------------------------------------------------------------------------------------
+DELIMITER $$
+
+CREATE TRIGGER prevent_high_salary_delete
+BEFORE DELETE ON Employees2
+FOR EACH ROW
+BEGIN
+    IF OLD.salary > 50000 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Cannot delete high salary employee';
+    END IF;
+END $$
+
+DELIMITER ;
+----------------------------------------------------------------------------------------------------------------------------
+DELETE FROM Employees2 WHERE emp_id = 1;
