@@ -1,0 +1,380 @@
+test>  // Create Collection
+| db.createCollection("Employee")
+{ ok: 1 }
+test> // Insert Sample Documents
+
+test>  // Create Collection
+| db.createCollection("Employee")
+{ ok: 1 }
+test> // Insert Sample Documents
+| db.Employee.insertMany([
+| {
+|     Empid: 101,
+|     Name: {FName: "Rahul", LName: "Sharma"},
+|     CompanyName: "TCS",
+|     Salary: 50000,
+|     Designation: "Developer",
+|     Age: 25,
+|     Expertise: "Java",
+|     DOB: "1999-05-10",
+|     EmailId: "rahul@gmail.com",
+|     Contact: 9876543210
+| },
+| {
+|     Empid: 102,
+|     Name: {FName: "Amit", LName: "Patil"},
+|     CompanyName: "Infosys",
+|     Salary: 70000,
+|     Designation: "Software Engineer",
+|     Age: 28,
+|     Expertise: "Python",
+|     DOB: "1996-08-15",
+|     EmailId: "amit@gmail.com",
+|     Contact: 9876501234
+| },
+| {
+|     Empid: 103,
+|     Name: {FName: "Sneha", LName: "Joshi"},
+|     CompanyName: "TCS",
+|     Salary: 90000,
+|     Designation: "Software Engineer",
+|     Age: 26,
+|     Expertise: "MongoDB",
+|     DOB: "1998-01-20",
+|     EmailId: "sneha@gmail.com",
+|     Contact: 9876512345
+| }
+| ])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6a0a05d7208b71b1f9abc114'),
+    '1': ObjectId('6a0a05d7208b71b1f9abc115'),
+    '2': ObjectId('6a0a05d7208b71b1f9abc116')
+  }
+}
+test> db.Employee.updateMany(
+| {CompanyName: "TCS"},
+|  {$inc: {Salary: 100000}}
+|  )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 6,
+  modifiedCount: 6,
+  upsertedCount: 0
+}
+test> db.Employee.find({CompanyName: "TCS" }).pretty()
+[
+  {
+    _id: ObjectId('6a0988e4c920e9337cabc114'),
+    Empid: 101,
+    Name: { FName: 'Rahul', LName: 'Sharma' },
+    CompanyName: 'TCS',
+    Salary: 250000,
+    Designation: 'Developer',
+    Age: 25,
+    Expertise: 'Java',
+    DOB: '1999-05-10',
+    EmailId: 'rahul@gmail.com',
+    Contact: 9876543210
+  },
+  {
+    _id: ObjectId('6a0988e4c920e9337cabc116'),
+    Empid: 103,
+    Name: { FName: 'Sneha', LName: 'Joshi' },
+    CompanyName: 'TCS',
+    Salary: 290000,
+    Designation: 'Software Engineer',
+    Age: 26,
+    Expertise: 'MongoDB',
+    DOB: '1998-01-20',
+    EmailId: 'sneha@gmail.com',
+    Contact: 9876512345
+  },
+  {
+    _id: ObjectId('6a098c0dc920e9337cabc117'),
+    Empid: 101,
+    Name: { FName: 'Rahul', LName: 'Sharma' },
+    CompanyName: 'TCS',
+    Salary: 170000,
+    Designation: 'Developer',
+    Age: 25,
+    Expertise: 'Java',
+    DOB: '1999-05-10',
+    EmailId: 'rahul@gmail.com',
+    Contact: 9876543210
+  },
+  {
+    _id: ObjectId('6a098c0dc920e9337cabc119'),
+    Empid: 103,
+    Name: { FName: 'Sneha', LName: 'Joshi' },
+    CompanyName: 'TCS',
+    Salary: 180000,
+    Designation: 'Manager',
+    Age: 30,
+    Expertise: 'MongoDB',
+    DOB: '1994-01-20',
+    EmailId: 'sneha@gmail.com',
+    Contact: 9876512345
+  },
+  {
+    _id: ObjectId('6a0a05d7208b71b1f9abc114'),
+    Empid: 101,
+    Name: { FName: 'Rahul', LName: 'Sharma' },
+    CompanyName: 'TCS',
+    Salary: 150000,
+    Designation: 'Developer',
+    Age: 25,
+    Expertise: 'Java',
+    DOB: '1999-05-10',
+    EmailId: 'rahul@gmail.com',
+    Contact: 9876543210
+  },
+  {
+    _id: ObjectId('6a0a05d7208b71b1f9abc116'),
+    Empid: 103,
+    Name: { FName: 'Sneha', LName: 'Joshi' },
+    CompanyName: 'TCS',
+    Salary: 190000,
+    Designation: 'Software Engineer',
+    Age: 26,
+    Expertise: 'MongoDB',
+    DOB: '1998-01-20',
+    EmailId: 'sneha@gmail.com',
+    Contact: 9876512345
+  }
+]
+test> db.Employee.find(
+| {
+| Designation: "Software Engineer",
+| Salary: {$gt: 60000}
+|  }
+|  )
+|
+[
+  {
+    _id: ObjectId('6a0988e4c920e9337cabc115'),
+    Empid: 102,
+    Name: { FName: 'Amit', LName: 'Patil' },
+    CompanyName: 'Infosys',
+    Salary: 70000,
+    Designation: 'Software Engineer',
+    Age: 28,
+    Expertise: 'Python',
+    DOB: '1996-08-15',
+    EmailId: 'amit@gmail.com',
+    Contact: 9876501234
+  },
+  {
+    _id: ObjectId('6a0988e4c920e9337cabc116'),
+    Empid: 103,
+    Name: { FName: 'Sneha', LName: 'Joshi' },
+    CompanyName: 'TCS',
+    Salary: 290000,
+    Designation: 'Software Engineer',
+    Age: 26,
+    Expertise: 'MongoDB',
+    DOB: '1998-01-20',
+    EmailId: 'sneha@gmail.com',
+    Contact: 9876512345
+  },
+  {
+    _id: ObjectId('6a098c0dc920e9337cabc118'),
+    Empid: 102,
+    Name: { FName: 'Amit', LName: 'Patil' },
+    CompanyName: 'Infosys',
+    Salary: 90000,
+    Designation: 'Software Engineer',
+    Age: 28,
+    Expertise: 'Python',
+    DOB: '1996-08-15',
+    EmailId: 'amit@gmail.com',
+    Contact: 9876501234
+  },
+  {
+    _id: ObjectId('6a0a05d7208b71b1f9abc115'),
+    Empid: 102,
+    Name: { FName: 'Amit', LName: 'Patil' },
+    CompanyName: 'Infosys',
+    Salary: 70000,
+    Designation: 'Software Engineer',
+    Age: 28,
+    Expertise: 'Python',
+    DOB: '1996-08-15',
+    EmailId: 'amit@gmail.com',
+    Contact: 9876501234
+  },
+  {
+    _id: ObjectId('6a0a05d7208b71b1f9abc116'),
+    Empid: 103,
+    Name: { FName: 'Sneha', LName: 'Joshi' },
+    CompanyName: 'TCS',
+    Salary: 190000,
+    Designation: 'Software Engineer',
+    Age: 26,
+    Expertise: 'MongoDB',
+    DOB: '1998-01-20',
+    EmailId: 'sneha@gmail.com',
+    Contact: 9876512345
+  }
+]
+test> db.Employee.find(
+| {
+| $or: [
+|  {Age: {$lt: 27}},
+|  {Salary: {$gt: 90000}}
+| ]
+| }
+| )
+[
+  {
+    _id: ObjectId('6a0988e4c920e9337cabc114'),
+    Empid: 101,
+    Name: { FName: 'Rahul', LName: 'Sharma' },
+    CompanyName: 'TCS',
+    Salary: 250000,
+    Designation: 'Developer',
+    Age: 25,
+    Expertise: 'Java',
+    DOB: '1999-05-10',
+    EmailId: 'rahul@gmail.com',
+    Contact: 9876543210
+  },
+  {
+    _id: ObjectId('6a0988e4c920e9337cabc116'),
+    Empid: 103,
+    Name: { FName: 'Sneha', LName: 'Joshi' },
+    CompanyName: 'TCS',
+    Salary: 290000,
+    Designation: 'Software Engineer',
+    Age: 26,
+    Expertise: 'MongoDB',
+    DOB: '1998-01-20',
+    EmailId: 'sneha@gmail.com',
+    Contact: 9876512345
+  },
+  {
+    _id: ObjectId('6a098c0dc920e9337cabc117'),
+    Empid: 101,
+    Name: { FName: 'Rahul', LName: 'Sharma' },
+    CompanyName: 'TCS',
+    Salary: 170000,
+    Designation: 'Developer',
+    Age: 25,
+    Expertise: 'Java',
+    DOB: '1999-05-10',
+    EmailId: 'rahul@gmail.com',
+    Contact: 9876543210
+  },
+  {
+    _id: ObjectId('6a098c0dc920e9337cabc119'),
+    Empid: 103,
+    Name: { FName: 'Sneha', LName: 'Joshi' },
+    CompanyName: 'TCS',
+    Salary: 180000,
+    Designation: 'Manager',
+    Age: 30,
+    Expertise: 'MongoDB',
+    DOB: '1994-01-20',
+    EmailId: 'sneha@gmail.com',
+    Contact: 9876512345
+  },
+  {
+    _id: ObjectId('6a098c0dc920e9337cabc11a'),
+    Empid: 104,
+    Name: { FName: 'Priya', LName: 'Yadav' },
+    CompanyName: 'Infosys',
+    Salary: 50000,
+    Designation: 'Developer',
+    Age: 24,
+    Expertise: 'C++',
+    DOB: '2000-07-11',
+    EmailId: 'priya@gmail.com',
+    Contact: 9876523456
+  },
+  {
+    _id: ObjectId('6a0a05d7208b71b1f9abc114'),
+    Empid: 101,
+    Name: { FName: 'Rahul', LName: 'Sharma' },
+    CompanyName: 'TCS',
+    Salary: 150000,
+    Designation: 'Developer',
+    Age: 25,
+    Expertise: 'Java',
+    DOB: '1999-05-10',
+    EmailId: 'rahul@gmail.com',
+    Contact: 9876543210
+  },
+  {
+    _id: ObjectId('6a0a05d7208b71b1f9abc116'),
+    Empid: 103,
+    Name: { FName: 'Sneha', LName: 'Joshi' },
+    CompanyName: 'TCS',
+    Salary: 190000,
+    Designation: 'Software Engineer',
+    Age: 26,
+    Expertise: 'MongoDB',
+    DOB: '1998-01-20',
+    EmailId: 'sneha@gmail.com',
+    Contact: 9876512345
+  }
+]
+test> db.Employee.find(
+| {Designation: {$ne: "Developer"}},
+| {
+|  _id: 1,
+| Empid: 1,
+|
+| "Name.FName": 1,
+| "Name.LName": 1
+| }
+| )
+[
+  {
+    _id: ObjectId('6a0988e4c920e9337cabc115'),
+    Empid: 102,
+    Name: { FName: 'Amit', LName: 'Patil' }
+  },
+  {
+    _id: ObjectId('6a0988e4c920e9337cabc116'),
+    Empid: 103,
+    Name: { FName: 'Sneha', LName: 'Joshi' }
+  },
+  {
+    _id: ObjectId('6a098c0dc920e9337cabc118'),
+    Empid: 102,
+    Name: { FName: 'Amit', LName: 'Patil' }
+  },
+  {
+    _id: ObjectId('6a098c0dc920e9337cabc119'),
+    Empid: 103,
+    Name: { FName: 'Sneha', LName: 'Joshi' }
+  },
+  {
+    _id: ObjectId('6a0a05d7208b71b1f9abc115'),
+    Empid: 102,
+    Name: { FName: 'Amit', LName: 'Patil' }
+  },
+  {
+    _id: ObjectId('6a0a05d7208b71b1f9abc116'),
+    Empid: 103,
+    Name: { FName: 'Sneha', LName: 'Joshi' }
+  }
+]
+test> db.Employee.find(
+| {Age: {$lt: 30}},
+| {Age: 1, Empid: 1, _id: 0}
+| )
+[
+  { Empid: 101, Age: 25 },
+  { Empid: 102, Age: 28 },
+  { Empid: 103, Age: 26 },
+  { Empid: 101, Age: 25 },
+  { Empid: 102, Age: 28 },
+  { Empid: 104, Age: 24 },
+  { Empid: 101, Age: 25 },
+  { Empid: 102, Age: 28 },
+  { Empid: 103, Age: 26 }
+]
+test>
